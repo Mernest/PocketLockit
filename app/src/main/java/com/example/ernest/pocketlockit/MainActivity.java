@@ -1,5 +1,6 @@
 package com.example.ernest.pocketlockit;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
 
-    // Write a message to the database
+    // Declaring Database Instance
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
@@ -35,21 +36,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
        unlockButton = (Button) findViewById(R.id.unlockButton);
-        lockButton = (Button) findViewById(R.id.lockButton);
+       lockButton = (Button) findViewById(R.id.lockButton);
 
-       /*ledStatus.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                Log.d("file", "Value is " + value);
-                unlockTextView.setText(value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("file", "Failed to read value", databaseError.toException());
-            }
-        });*/
 
         unlockButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,4 +53,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
+
+
