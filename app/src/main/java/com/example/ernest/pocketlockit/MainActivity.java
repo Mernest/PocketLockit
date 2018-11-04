@@ -40,19 +40,6 @@ public class MainActivity extends AppCompatActivity {
        unlockButton = (Button) findViewById(R.id.unlockButton);
         lockButton = (Button) findViewById(R.id.lockButton);
 
-       /*ledStatus.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String value = dataSnapshot.getValue(String.class);
-                Log.d("file", "Value is " + value);
-                unlockTextView.setText(value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("file", "Failed to read value", databaseError.toException());
-            }
-        });*/
 
         unlockButton.setOnClickListener(new View.OnClickListener() {
             @Override
