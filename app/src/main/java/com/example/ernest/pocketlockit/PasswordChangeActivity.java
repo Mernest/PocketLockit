@@ -1,5 +1,6 @@
 package com.example.ernest.pocketlockit;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -101,8 +102,14 @@ public class PasswordChangeActivity extends AppCompatActivity {
                 currentPasswordEditText.setFocusable(false);
                 newPasswordEditText.setFocusable(false);
                 verifyNewPasswordEditText.setFocusable(false);
+                goToLockUnlockActivity();
 
             }
         });
+    }
+
+    void goToLockUnlockActivity(){
+        Intent intent = new Intent(PasswordChangeActivity.this, LockUnlockActivity.class);
+        startActivity(intent);
     }
 }
