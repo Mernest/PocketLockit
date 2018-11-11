@@ -32,7 +32,6 @@ public class LockUnlockActivity extends AppCompatActivity {
     Button unlockButton;
     Button lockButton;
     boolean currentStatus;
-    String toStringStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +41,11 @@ public class LockUnlockActivity extends AppCompatActivity {
         unlockButton = (Button) findViewById(R.id.unlockButton);
         lockButton = (Button) findViewById(R.id.lockButton);
 
-        ledResponse.addValueEventListener(new ValueEventListener() {
+        ledResponse.addValueEventListener(new ValueEventListener() { // Get
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 currentStatus = dataSnapshot.getValue(boolean.class);
-                toStringStatus = String.valueOf(currentStatus);
 
                 if (currentStatus){
                     unlockButton.setEnabled(false);

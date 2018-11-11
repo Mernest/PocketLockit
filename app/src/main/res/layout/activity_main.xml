@@ -14,7 +14,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="192dp"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:hint="Enter your password"
+        android:inputType="textPassword"
+        android:maxLength= "10"/>
+
 
     <Button
         android:id="@+id/verifyButton"

@@ -49,6 +49,50 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52563774240:android:8eec073653db7c66",
+        "android_client_info": {
+          "package_name": "com.example.shamit.pocketlockit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52563774240-3sfb995ldjdaeqrvnps9767178dg0um0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shamit.pocketlockit",
+            "certificate_hash": "615f43c4a6e04a1d9fee0c7fe92cb5bb252cc805"
+          }
+        },
+        {
+          "client_id": "52563774240-dn1d7v8f65hnanhjk0dbsj5sdr3dtc8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdKkTx9TjnhcEfA3KpMyF9_ph6tnP9x4E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52563774240-dn1d7v8f65hnanhjk0dbsj5sdr3dtc8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"
