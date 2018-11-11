@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ public class LockUnlockActivity extends AppCompatActivity {
     Button lockButton;
     boolean currentStatus;
     String toStringStatus;
+    ImageView redLock;
+    ImageView greenUnlock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class LockUnlockActivity extends AppCompatActivity {
 
         unlockButton = (Button) findViewById(R.id.unlockButton);
         lockButton = (Button) findViewById(R.id.lockButton);
+        redLock = (ImageView) findViewById(R.id.redLock);
+        greenUnlock = (ImageView) findViewById(R.id.greenUnlock);
 
         ledResponse.addValueEventListener(new ValueEventListener() {
             @Override
@@ -52,12 +57,16 @@ public class LockUnlockActivity extends AppCompatActivity {
                 if (currentStatus){
                     unlockButton.setEnabled(false);
                     lockButton.setEnabled(true);
+                    greenUnlock.setVisibility(View.VISIBLE);
+                    redLock.setVisibility(View.INVISIBLE);
                     Toast toast = Toast.makeText(getApplicationContext(), "Door is Unlocked" , Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else {
                     unlockButton.setEnabled(true);
                     lockButton.setEnabled(false);
+                    greenUnlock.setVisibility(View.INVISIBLE);
+                    redLock.setVisibility(View.VISIBLE);
                     Toast toast = Toast.makeText(getApplicationContext(), "Door is Locked" , Toast.LENGTH_SHORT);
                     toast.show();
                 }
