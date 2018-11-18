@@ -2,46 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/unlockButton"
+    <EditText
+        android:id="@+id/passwordEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/lockButton"
-        android:layout_marginStart="62dp"
-        android:text="Unlock" />
-
-    <Button
-        android:id="@+id/lockButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="71dp"
-        android:layout_marginTop="217dp"
-        android:text="Lock" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="192dp"
+        android:ems="10"
+        android:hint="Enter your password"
+        android:inputType="textPassword"
+        android:maxLength="10" />
 
-    <TextView
-        android:id="@+id/unlockTextView"
+
+    <Button
+        android:id="@+id/verifyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="181dp"
-        android:layout_marginStart="71dp"
-        android:text="Untitled" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="149dp"
+        android:text="Verify" />
 
-    <TextView
-        android:id="@+id/lockTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/unlockTextView"
-        android:layout_marginEnd="78dp"
-        android:text="Untitled" />
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.3"
+        android:background="#00000000"
+        android:scaleType="centerCrop"
+        android:src="@drawable/download" />
+
 </RelativeLayout>
+

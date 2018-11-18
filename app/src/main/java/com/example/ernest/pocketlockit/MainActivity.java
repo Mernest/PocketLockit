@@ -1,13 +1,16 @@
 package com.example.ernest.pocketlockit;
 
+import android.app.Notification;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,62 +19,102 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static com.example.ernest.pocketlockit.App.CHANNEL;
+
 public class MainActivity extends AppCompatActivity {
 
 
-    // Write a message to the database
+    // Declaring Database Instance
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
-    // Declaring Buttons
-    Button unlockButton;
-    Button lockButton;
+    DatabaseReference passwordRef = myRef.child("Password");
+    DatabaseReference motionStatusRef = myRef.child("MotionStatus");
 
-    TextView unlockTextView;
+    protected String currentDbPassword;
+    protected Button verifyButton;
+    protected EditText passwordEditText;
+    protected boolean motionStatus;
+
+    private NotificationManagerCompat notificationManager;
 
 
-   final DatabaseReference ledStatus = myRef.child("led1").child("status");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       unlockButton = (Button) findViewById(R.id.unlockButton);
-        lockButton = (Button) findViewById(R.id.lockButton);
+        verifyButton = (Button) findViewById(R.id.verifyButton);
+        passwordEditText = (EditText) findViewById(R.id.passwordEditText);
+
+        notificationManager = NotificationManagerCompat.from(this);
 
 
-        unlockButton.setOnClickListener(new View.OnClickListener() {
+        passwordRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                ledStatus.setValue("ON");
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                currentDbPassword = dataSnapshot.getValue(String.class);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
-        lockButton.setOnClickListener(new View.OnClickListener() {
+        motionStatusRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                ledStatus.setValue("OFF");
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                motionStatus = dataSnapshot.getValue(boolean.class);
+                if (motionStatus){
+                Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL).setSmallIcon(R.drawable.ic_stat_name)
+                        .setContentTitle("Motion")
+                        .setContentText("Someone is close to your door")
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setCategory(NotificationCompat.CATEGORY_STATUS)
+                        .build();
+                notificationManager.notify(1, notification);
+                }
+               // Toast toast = Toast.makeText(getApplicationContext(), motionStatus, Toast.LENGTH_SHORT);
+                //toast.show();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
+
+        verifyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 if (passwordEditText.getText().toString().equals(currentDbPassword)){
+
+                    goToLockUnlockActivity();
+                }
+                else {
+                     //Toast toast = Toast.makeText(getApplicationContext(), currentDbPassword, Toast.LENGTH_SHORT);
+                     Toast toast = Toast.makeText(getApplicationContext(), "Password is incorrect", Toast.LENGTH_SHORT);
+                     toast.show();
+                 }
+            }
+        });
+
+
     }
 
-    //Make 3 dot edit button visible
+    void goToLockUnlockActivity(){
+        Intent intent = new Intent(MainActivity.this, LockUnlockActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.menu:
-                Toast.makeText(this, "Edit Clicked",Toast.LENGTH_SHORT).show();
-                break;
-        }
-        return true;
-    }
 }
