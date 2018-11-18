@@ -31,13 +31,30 @@
         android:text="Lock" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/cactus"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.3"
         android:background="@android:drawable/screen_background_light_transparent"
         android:scaleType="centerCrop"
         android:src="@drawable/download" />
+    <ImageView
+        android:id="@+id/greencactus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.3"
+        android:background="#00000000"
+        android:scaleType="centerCrop"
+        android:src="@drawable/greendownload" />
+
+    <ImageView
+        android:id="@+id/redcactus"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.3"
+        android:background="#00000000"
+        android:scaleType="centerCrop"
+        android:src="@drawable/reddownload" />
 
     <ImageView
         android:id="@+id/redLock"

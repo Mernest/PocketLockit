@@ -2,6 +2,7 @@ package com.example.ernest.pocketlockit;
 
 import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +38,10 @@ public class LockUnlockActivity extends AppCompatActivity {
     ImageView redLock;
     boolean currentStatus;
 
+    ImageView cactus;
+    ImageView redcactus;
+    ImageView greencactus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,12 @@ public class LockUnlockActivity extends AppCompatActivity {
         greenUnlock = (ImageView) findViewById(R.id.greenUnlock);
         redLock = (ImageView) findViewById(R.id.redLock);
 
+        cactus = (ImageView) findViewById(R.id.cactus);
+        cactus.setVisibility(View.VISIBLE);
+        redcactus = (ImageView) findViewById(R.id.redcactus);
+        redcactus.setVisibility(View.INVISIBLE);
+        greencactus = (ImageView)findViewById(R.id.greencactus);
+        greencactus.setVisibility(View.INVISIBLE);
 
         ledResponse.addValueEventListener(new ValueEventListener() { // Get
             @Override
@@ -60,6 +71,15 @@ public class LockUnlockActivity extends AppCompatActivity {
                     //((TransitionDrawable)redLock.getDrawable()).startTransition(1000);
                     redLock.setVisibility(View.VISIBLE);
                     greenUnlock.setVisibility(View.INVISIBLE);
+                    cactus.setVisibility(View.INVISIBLE);
+                    redcactus.setVisibility(View.INVISIBLE );
+                    greencactus.setVisibility(View.VISIBLE);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            cactus.setVisibility(View.VISIBLE);
+                            greencactus.setVisibility(View.INVISIBLE);
+                        }}, 1000);
 
                     Toast toast = Toast.makeText(getApplicationContext(), "Door is Unlocked" , Toast.LENGTH_SHORT);
                     toast.show();
@@ -69,6 +89,15 @@ public class LockUnlockActivity extends AppCompatActivity {
                     lockButton.setEnabled(false);
                     redLock.setVisibility(View.INVISIBLE);
                     greenUnlock.setVisibility(View.VISIBLE);
+                    cactus.setVisibility(View.INVISIBLE);
+                    redcactus.setVisibility(View.INVISIBLE );
+                    greencactus.setVisibility(View.VISIBLE);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            cactus.setVisibility(View.VISIBLE);
+                            greencactus.setVisibility(View.INVISIBLE);
+                        }}, 1000);
                     Toast toast = Toast.makeText(getApplicationContext(), "Door is Locked" , Toast.LENGTH_SHORT);
                     toast.show();
                 }

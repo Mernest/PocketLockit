@@ -70,6 +70,7 @@ public class PasswordChangeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_change);
 
+
         saveButton = (Button) findViewById(R.id.saveButton);
         currentPasswordEditText = (EditText) findViewById(R.id.currentPasswordEditText);
         newPasswordEditText = (EditText) findViewById(R.id.newPasswordEditText);
