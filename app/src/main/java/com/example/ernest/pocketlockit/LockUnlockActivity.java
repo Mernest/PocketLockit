@@ -69,8 +69,8 @@ public class LockUnlockActivity extends AppCompatActivity {
                     unlockButton.setEnabled(false);
                     lockButton.setEnabled(true);
                     //((TransitionDrawable)redLock.getDrawable()).startTransition(1000);
-                    redLock.setVisibility(View.VISIBLE);
-                    greenUnlock.setVisibility(View.INVISIBLE);
+                    redLock.setVisibility(View.INVISIBLE);
+                    greenUnlock.setVisibility(View.VISIBLE);
                     cactus.setVisibility(View.INVISIBLE);
                     redcactus.setVisibility(View.INVISIBLE );
                     greencactus.setVisibility(View.VISIBLE);
@@ -87,8 +87,8 @@ public class LockUnlockActivity extends AppCompatActivity {
                 else {
                     unlockButton.setEnabled(true);
                     lockButton.setEnabled(false);
-                    redLock.setVisibility(View.INVISIBLE);
-                    greenUnlock.setVisibility(View.VISIBLE);
+                    redLock.setVisibility(View.VISIBLE);
+                    greenUnlock.setVisibility(View.INVISIBLE);
                     cactus.setVisibility(View.INVISIBLE);
                     redcactus.setVisibility(View.INVISIBLE );
                     greencactus.setVisibility(View.VISIBLE);
