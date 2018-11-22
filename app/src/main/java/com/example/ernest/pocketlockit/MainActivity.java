@@ -2,14 +2,18 @@ package com.example.ernest.pocketlockit;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.media.Image;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +37,10 @@ public class MainActivity extends AppCompatActivity {
     protected String currentDbPassword;
     protected Button verifyButton;
     protected EditText passwordEditText;
-    protected boolean motionStatus;
+
+    ImageView cactus;
+    ImageView redcactus;
+    ImageView greencactus;
 
     private NotificationManagerCompat notificationManager;
 
@@ -44,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        cactus = (ImageView) findViewById(R.id.cactus);
+        cactus.setVisibility(View.VISIBLE);
+        redcactus = (ImageView) findViewById(R.id.redcactus);
+        redcactus.setVisibility(View.INVISIBLE);
+        greencactus = (ImageView)findViewById(R.id.greencactus);
+        greencactus.setVisibility(View.INVISIBLE);
         verifyButton = (Button) findViewById(R.id.verifyButton);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
 
@@ -66,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         motionStatusRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                motionStatus = dataSnapshot.getValue(boolean.class);
+                boolean motionStatus = dataSnapshot.getValue(boolean.class);
                 if (motionStatus){
                 Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL).setSmallIcon(R.drawable.ic_stat_name)
                         .setContentTitle("Motion")
@@ -90,11 +103,30 @@ public class MainActivity extends AppCompatActivity {
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cactus.setVisibility(View.INVISIBLE);
+                redcactus.setVisibility(View.INVISIBLE );
+                greencactus.setVisibility(View.VISIBLE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        cactus.setVisibility(View.VISIBLE);
+                        greencactus.setVisibility(View.INVISIBLE);
+                    }}, 2000);
+
                  if (passwordEditText.getText().toString().equals(currentDbPassword)){
 
                     goToLockUnlockActivity();
                 }
                 else {
+                     cactus.setVisibility(View.INVISIBLE);
+                     greencactus.setVisibility(View.INVISIBLE);
+                     redcactus.setVisibility(View.VISIBLE);
+                     new Handler().postDelayed(new Runnable() {
+                         @Override
+                         public void run() {
+                             cactus.setVisibility(View.VISIBLE);
+                             redcactus.setVisibility(View.INVISIBLE);
+                         }}, 2000);
                      //Toast toast = Toast.makeText(getApplicationContext(), currentDbPassword, Toast.LENGTH_SHORT);
                      Toast toast = Toast.makeText(getApplicationContext(), "Password is incorrect", Toast.LENGTH_SHORT);
                      toast.show();
@@ -108,6 +140,12 @@ public class MainActivity extends AppCompatActivity {
     void goToLockUnlockActivity(){
         Intent intent = new Intent(MainActivity.this, LockUnlockActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
     }
 
 }

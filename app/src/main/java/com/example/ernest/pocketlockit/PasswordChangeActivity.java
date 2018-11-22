@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,6 +70,7 @@ public class PasswordChangeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_change);
 
+
         saveButton = (Button) findViewById(R.id.saveButton);
         currentPasswordEditText = (EditText) findViewById(R.id.currentPasswordEditText);
         newPasswordEditText = (EditText) findViewById(R.id.newPasswordEditText);
@@ -112,4 +114,11 @@ public class PasswordChangeActivity extends AppCompatActivity {
         Intent intent = new Intent(PasswordChangeActivity.this, LockUnlockActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
 }

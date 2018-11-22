@@ -19,7 +19,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".LockUnlockActivity" />
-        <activity android:name=".PasswordChangeActivity"></activity>
+        <activity android:name=".PasswordChangeActivity"
+            android:parentActivityName=".LockUnlockActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LockUnlockActivity"/>
+        </activity>
     </application>
 
 </manifest>
