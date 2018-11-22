@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         motionStatusRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                motionStatus = dataSnapshot.getValue(boolean.class);
+                boolean motionStatus = dataSnapshot.getValue(boolean.class);
                 if (motionStatus){
                 Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL).setSmallIcon(R.drawable.ic_stat_name)
                         .setContentTitle("Motion")
