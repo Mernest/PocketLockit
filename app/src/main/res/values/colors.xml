@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#228b22</color>
-    <color name="colorPrimaryDark">#1d791d</color>
-    <color name="colorAccent">#ff4081</color>
-    <color name= "title_color">#000000</color>
+    <color name="colorPrimary">#171717</color>
+    <color name="colorPrimaryDark">#0e0e0e</color>
+    <color name="colorAccent">#F5F5F5</color>
+    <color name= "title_color">#F5F5F5</color>
+    <color name= "cicle">#8be600</color>
+    <color name= "redcicle">#ff0000</color>
 </resources>
