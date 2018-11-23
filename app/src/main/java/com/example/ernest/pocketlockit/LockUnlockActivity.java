@@ -34,13 +34,16 @@ public class LockUnlockActivity extends AppCompatActivity {
     // Needed Declarations
     Button unlockButton;
     Button lockButton;
-    ImageView greenUnlock;
-    ImageView redLock;
+//    ImageView greenUnlock;
+//    ImageView redLock;
     boolean currentStatus;
 
-    ImageView cactus;
-    ImageView redcactus;
-    ImageView greencactus;
+    TextView redcircle;
+    TextView greencircle;
+
+//    ImageView cactus;
+//    ImageView redcactus;
+//    ImageView greencactus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +52,17 @@ public class LockUnlockActivity extends AppCompatActivity {
 
         unlockButton = (Button) findViewById(R.id.unlockButton);
         lockButton = (Button) findViewById(R.id.lockButton);
-        greenUnlock = (ImageView) findViewById(R.id.greenUnlock);
-        redLock = (ImageView) findViewById(R.id.redLock);
+        greencircle = (TextView) findViewById(R.id.greencircle);
+        redcircle = (TextView) findViewById(R.id.redcircle);
+//        greenUnlock = (ImageView) findViewById(R.id.greenUnlock);
+//        redLock = (ImageView) findViewById(R.id.redLock);
 
-        cactus = (ImageView) findViewById(R.id.cactus);
-        cactus.setVisibility(View.VISIBLE);
-        redcactus = (ImageView) findViewById(R.id.redcactus);
-        redcactus.setVisibility(View.INVISIBLE);
-        greencactus = (ImageView)findViewById(R.id.greencactus);
-        greencactus.setVisibility(View.INVISIBLE);
+//        cactus = (ImageView) findViewById(R.id.cactus);
+//        cactus.setVisibility(View.VISIBLE);
+//        redcactus = (ImageView) findViewById(R.id.redcactus);
+//        redcactus.setVisibility(View.INVISIBLE);
+//        greencactus = (ImageView)findViewById(R.id.greencactus);
+//        greencactus.setVisibility(View.INVISIBLE);
 
         ledResponse.addValueEventListener(new ValueEventListener() { // Get
             @Override
@@ -68,18 +73,20 @@ public class LockUnlockActivity extends AppCompatActivity {
                 if (currentStatus){
                     unlockButton.setEnabled(false);
                     lockButton.setEnabled(true);
-                    //((TransitionDrawable)redLock.getDrawable()).startTransition(1000);
-                    redLock.setVisibility(View.INVISIBLE);
-                    greenUnlock.setVisibility(View.VISIBLE);
-                    cactus.setVisibility(View.INVISIBLE);
-                    redcactus.setVisibility(View.INVISIBLE );
-                    greencactus.setVisibility(View.VISIBLE);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            cactus.setVisibility(View.VISIBLE);
-                            greencactus.setVisibility(View.INVISIBLE);
-                        }}, 1000);
+                    redcircle.setVisibility(View.INVISIBLE);
+                    greencircle.setVisibility(View.VISIBLE);
+
+//                    redLock.setVisibility(View.INVISIBLE);
+//                    greenUnlock.setVisibility(View.VISIBLE);
+//                    cactus.setVisibility(View.INVISIBLE);
+//                    redcactus.setVisibility(View.INVISIBLE );
+//                    greencactus.setVisibility(View.VISIBLE);
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            cactus.setVisibility(View.VISIBLE);
+//                            greencactus.setVisibility(View.INVISIBLE);
+//                        }}, 1000);
 
                     Toast toast = Toast.makeText(getApplicationContext(), "Door is Unlocked" , Toast.LENGTH_SHORT);
                     toast.show();
@@ -87,17 +94,19 @@ public class LockUnlockActivity extends AppCompatActivity {
                 else {
                     unlockButton.setEnabled(true);
                     lockButton.setEnabled(false);
-                    redLock.setVisibility(View.VISIBLE);
-                    greenUnlock.setVisibility(View.INVISIBLE);
-                    cactus.setVisibility(View.INVISIBLE);
-                    redcactus.setVisibility(View.INVISIBLE );
-                    greencactus.setVisibility(View.VISIBLE);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            cactus.setVisibility(View.VISIBLE);
-                            greencactus.setVisibility(View.INVISIBLE);
-                        }}, 1000);
+                    redcircle.setVisibility(View.VISIBLE);
+                    greencircle.setVisibility(View.INVISIBLE);
+//                    redLock.setVisibility(View.VISIBLE);
+//                    greenUnlock.setVisibility(View.INVISIBLE);
+//                    cactus.setVisibility(View.INVISIBLE);
+//                    redcactus.setVisibility(View.INVISIBLE );
+//                    greencactus.setVisibility(View.VISIBLE);
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            cactus.setVisibility(View.VISIBLE);
+//                            greencactus.setVisibility(View.INVISIBLE);
+//                        }}, 1000);
                     Toast toast = Toast.makeText(getApplicationContext(), "Door is Locked" , Toast.LENGTH_SHORT);
                     toast.show();
                 }
