@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/btn_backgroupstyle">
 
     <EditText
+        android:textCursorDrawable="@color/title_color"
+        android:textColor="@color/title_color"
         android:id="@+id/passwordEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,12 +17,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="192dp"
         android:ems="10"
+        android:backgroundTint="@color/title_color"
         android:hint="Enter your password"
         android:inputType="textPassword"
-        android:maxLength="10" />
+        android:maxLength="10"
+        android:textColorHint="#F5F5F5" />
 
 
     <Button
+        android:background="@drawable/btn_button_style"
         android:id="@+id/verifyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,32 +34,7 @@
         android:layout_marginBottom="149dp"
         android:text="Verify" />
 
-    <ImageView
-    android:id="@+id/cactus"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:alpha="0.3"
-    android:background="#00000000"
-    android:scaleType="centerCrop"
-    android:src="@drawable/download" />
 
-    <ImageView
-        android:id="@+id/greencactus"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.3"
-        android:background="#00000000"
-        android:scaleType="centerCrop"
-        android:src="@drawable/greendownload" />
-
-    <ImageView
-        android:id="@+id/redcactus"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.3"
-        android:background="#00000000"
-        android:scaleType="centerCrop"
-        android:src="@drawable/reddownload" />
 
 </RelativeLayout>
 

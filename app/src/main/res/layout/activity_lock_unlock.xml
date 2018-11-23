@@ -5,9 +5,50 @@
     android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LockUnlockActivity">
+    tools:context=".LockUnlockActivity"
+    android:background="@drawable/btn_backgroupstyle">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="118dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginBottom="235dp"
+        android:id="@+id/greencircle"
+        android:background="@drawable/circle"
+        android:gravity="center"
+        android:text="Unlocked"
+        android:textColor="#F5F5F5" />
+    <TextView
+        android:id="@+id/redcircle"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="118dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginBottom="235dp"
+        android:background="@drawable/red_circle"
+        android:gravity="center"
+        android:text="Locked"
+        android:textColor="#F5F5F5" />
 
     <Button
+        android:background="@drawable/btn_button_style"
         android:id="@+id/unlockButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,59 +63,14 @@
         android:id="@+id/lockButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight= "true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="71dp"
-        android:layout_marginRight = "70dp"
-        android:layout_marginTop="217dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="366dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginRight="68dp"
+        android:background="@drawable/btn_button_style"
         android:text="Lock" />
-
-    <ImageView
-        android:id="@+id/cactus"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.3"
-        android:background="@android:drawable/screen_background_light_transparent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/download" />
-    <ImageView
-        android:id="@+id/greencactus"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.3"
-        android:background="#00000000"
-        android:scaleType="centerCrop"
-        android:src="@drawable/greendownload" />
-
-    <ImageView
-        android:id="@+id/redcactus"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.3"
-        android:background="#00000000"
-        android:scaleType="centerCrop"
-        android:src="@drawable/reddownload" />
-
-    <ImageView
-        android:id="@+id/redLock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="83dp"
-        android:background="@color/common_google_signin_btn_text_dark_disabled"
-        app:srcCompat="@drawable/thistheone" />
-
-    <ImageView
-        android:id="@+id/greenUnlock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="83dp"
-        android:background="@color/common_google_signin_btn_text_dark_disabled"
-        app:srcCompat="@drawable/thistheotherone" />
 
 
 </RelativeLayout>

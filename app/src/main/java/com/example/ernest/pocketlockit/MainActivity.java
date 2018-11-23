@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
     protected Button verifyButton;
     protected EditText passwordEditText;
 
-    ImageView cactus;
-    ImageView redcactus;
-    ImageView greencactus;
+//    ImageView cactus;
+//    ImageView redcactus;
+//    ImageView greencactus;
 
     private NotificationManagerCompat notificationManager;
 
@@ -50,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        cactus = (ImageView) findViewById(R.id.cactus);
-        cactus.setVisibility(View.VISIBLE);
-        redcactus = (ImageView) findViewById(R.id.redcactus);
-        redcactus.setVisibility(View.INVISIBLE);
-        greencactus = (ImageView)findViewById(R.id.greencactus);
-        greencactus.setVisibility(View.INVISIBLE);
+//
+//        cactus = (ImageView) findViewById(R.id.cactus);
+//        cactus.setVisibility(View.VISIBLE);
+//        redcactus = (ImageView) findViewById(R.id.redcactus);
+//        redcactus.setVisibility(View.INVISIBLE);
+//        greencactus = (ImageView)findViewById(R.id.greencactus);
+//        greencactus.setVisibility(View.INVISIBLE);
         verifyButton = (Button) findViewById(R.id.verifyButton);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
 
@@ -103,30 +103,30 @@ public class MainActivity extends AppCompatActivity {
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cactus.setVisibility(View.INVISIBLE);
-                redcactus.setVisibility(View.INVISIBLE );
-                greencactus.setVisibility(View.VISIBLE);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        cactus.setVisibility(View.VISIBLE);
-                        greencactus.setVisibility(View.INVISIBLE);
-                    }}, 2000);
+//                cactus.setVisibility(View.INVISIBLE);
+//                redcactus.setVisibility(View.INVISIBLE );
+//                greencactus.setVisibility(View.VISIBLE);
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        cactus.setVisibility(View.VISIBLE);
+//                        greencactus.setVisibility(View.INVISIBLE);
+//                    }}, 2000);
 
                  if (passwordEditText.getText().toString().equals(currentDbPassword)){
 
                     goToLockUnlockActivity();
                 }
                 else {
-                     cactus.setVisibility(View.INVISIBLE);
-                     greencactus.setVisibility(View.INVISIBLE);
-                     redcactus.setVisibility(View.VISIBLE);
-                     new Handler().postDelayed(new Runnable() {
-                         @Override
-                         public void run() {
-                             cactus.setVisibility(View.VISIBLE);
-                             redcactus.setVisibility(View.INVISIBLE);
-                         }}, 2000);
+//                     cactus.setVisibility(View.INVISIBLE);
+//                     greencactus.setVisibility(View.INVISIBLE);
+//                     redcactus.setVisibility(View.VISIBLE);
+                     //new Handler().postDelayed(new Runnable() {
+                       //  @Override
+                       //  public void run() {
+                        //     cactus.setVisibility(View.VISIBLE);
+                       //      redcactus.setVisibility(View.INVISIBLE);
+                       //  }}, 2000);
                      //Toast toast = Toast.makeText(getApplicationContext(), currentDbPassword, Toast.LENGTH_SHORT);
                      Toast toast = Toast.makeText(getApplicationContext(), "Password is incorrect", Toast.LENGTH_SHORT);
                      toast.show();
