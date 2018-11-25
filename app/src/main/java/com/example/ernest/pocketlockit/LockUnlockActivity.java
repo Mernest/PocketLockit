@@ -1,13 +1,20 @@
 package com.example.ernest.pocketlockit;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,12 +24,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+
 public class LockUnlockActivity extends AppCompatActivity {
+
 
     // Declaring Database Instance
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
-
 
     // Declaring needed references
     final DatabaseReference ledResponse = myRef.child ("LockResponse");
@@ -31,7 +44,16 @@ public class LockUnlockActivity extends AppCompatActivity {
     // Needed Declarations
     Button unlockButton;
     Button lockButton;
+    Switch notificationSwitch;
+
     boolean currentStatus;
+    boolean unlockPressed;
+    boolean prevUnlockPressed;
+    boolean switchOnOff;
+
+    public static final String SHARED_PREFS = "sharePrefs";
+    public static final String SWITCH1 = "toggleSwitch";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,28 +62,81 @@ public class LockUnlockActivity extends AppCompatActivity {
 
         unlockButton = (Button) findViewById(R.id.unlockButton);
         lockButton = (Button) findViewById(R.id.lockButton);
+        notificationSwitch = (Switch) findViewById(R.id.notificationSwitch);
 
-        ledResponse.addValueEventListener(new ValueEventListener() { // Get
+        loadData();
+        updateViews();
+
+        notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            //SharedPreferences sharedPreferences = getSharedPreferences("toggleValue", Context.MODE_PRIVATE);
+            //SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               /* if(isChecked){
+                    //toggle =true;
+//                    editor.putBoolean("Value", true);
+//                    editor.apply();
+                    Intent i = new Intent();
+                    i.putExtra("toggleValue",true);
+                }
+                else{
+//                toggle =false;
+//                editor.putBoolean("Value", false);
+//                editor.apply();
+                    Intent i = new Intent();
+                    i.putExtra("toggleValue",true);*/
+               saveData();
+            }
+
+        });
+
+        ledStatus.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                unlockPressed = dataSnapshot.getValue(boolean.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        ledResponse.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 currentStatus = dataSnapshot.getValue(boolean.class);
 
-                if (currentStatus){
+
+                if (currentStatus && unlockPressed){
                     unlockButton.setEnabled(false);
                     lockButton.setEnabled(true);
                     Toast toast = Toast.makeText(getApplicationContext(), "Door is Unlocked" , Toast.LENGTH_SHORT);
                     toast.show();
+
+                    if(prevUnlockPressed) {
+                        Calendar calendar = Calendar.getInstance();
+                        Date date = calendar.getTime();
+                        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+                        String formattedDate = dateFormat.format(date);
+                        String currentDate = DateFormat.getDateInstance().format(calendar.getTime()) + "\n" + formattedDate;
+                        DatabaseHelper dbhelper = new DatabaseHelper(LockUnlockActivity.this);
+                        dbhelper.insertLogItem(new LogItem(-1, currentDate, "Door opened"));
+                        prevUnlockPressed = true;
+                    }
                 }
                 else {
                     unlockButton.setEnabled(true);
                     lockButton.setEnabled(false);
+                    prevUnlockPressed = false;
                     Toast toast = Toast.makeText(getApplicationContext(), "Door is Locked" , Toast.LENGTH_SHORT);
                     toast.show();
                 }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -72,7 +147,7 @@ public class LockUnlockActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ledStatus.setValue(true);
-
+                prevUnlockPressed = true;
             }
         });
 
@@ -80,10 +155,24 @@ public class LockUnlockActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ledStatus.setValue(false);
+                prevUnlockPressed = false;
 
             }
         });
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
@@ -96,8 +185,12 @@ public class LockUnlockActivity extends AppCompatActivity {
 
         switch(id){
             case R.id.passwordChangeMenu:
-                Toast.makeText(this,"Edit Button Clicked",Toast.LENGTH_SHORT).show();
                 goToPasswordChangeActivity();
+                return true;
+            case R.id.logMenu:
+                finish();
+                goToLogActivity();
+                return true;
         }
         return true;
     }
@@ -106,5 +199,25 @@ public class LockUnlockActivity extends AppCompatActivity {
         Intent intent = new Intent(LockUnlockActivity.this, PasswordChangeActivity.class);
         startActivity(intent);
     }
+
+    void goToLogActivity(){
+        Intent intent = new Intent(LockUnlockActivity.this, LogActivity.class);
+        startActivity(intent);
+    }
+
+    public void saveData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(SWITCH1,notificationSwitch.isChecked());
+        editor.apply();
+    }
+    public void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        switchOnOff = sharedPreferences.getBoolean(SWITCH1,false);
+    }
+    public void updateViews(){
+        notificationSwitch.setChecked(switchOnOff);
+    }
+
 
 }

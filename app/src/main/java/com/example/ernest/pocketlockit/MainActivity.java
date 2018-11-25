@@ -1,7 +1,9 @@
 package com.example.ernest.pocketlockit;
 
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected Button verifyButton;
     protected EditText passwordEditText;
     protected boolean motionStatus;
+    protected boolean receivedToggle;
 
     private NotificationManagerCompat notificationManager;
 
@@ -63,30 +66,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        motionStatusRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                motionStatus = dataSnapshot.getValue(boolean.class);
-                if (motionStatus){
-                Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL).setSmallIcon(R.drawable.ic_stat_name)
-                        .setContentTitle("Motion")
-                        .setContentText("Someone is close to your door")
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setCategory(NotificationCompat.CATEGORY_STATUS)
-                        .build();
-                notificationManager.notify(1, notification);
+       // SharedPreferences result = getSharedPreferences("toggleValue", Context.MODE_PRIVATE);
+
+        Intent data = new Intent();
+        //receivedToggle = result.getBoolean("Value", true);
+        receivedToggle = data.getBooleanExtra("toggleValue",false);
+
+        if (receivedToggle) {
+            motionStatusRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    motionStatus = dataSnapshot.getValue(boolean.class);
+                    if (motionStatus) {
+                        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL).setSmallIcon(R.drawable.ic_stat_name)
+                                .setContentTitle("Motion")
+                                .setContentText("Someone is close to your door")
+                                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                .setCategory(NotificationCompat.CATEGORY_STATUS)
+                                .build();
+                        notificationManager.notify(1, notification);
+                    }
+                    // Toast toast = Toast.makeText(getApplicationContext(), motionStatus, Toast.LENGTH_SHORT);
+                    //toast.show();
+
                 }
-               // Toast toast = Toast.makeText(getApplicationContext(), motionStatus, Toast.LENGTH_SHORT);
-                //toast.show();
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+                }
+            });
+        }
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

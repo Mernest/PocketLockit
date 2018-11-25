@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ernest.pocketlockit">
-    
 
     <application
-        android:name = ".App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,8 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LockUnlockActivity" />
-        <activity android:name=".PasswordChangeActivity"></activity>
+        <activity android:name=".LockUnlockActivity"></activity>
+        <activity android:name=".LogActivity"
+            android:parentActivityName=".LockUnlockActivity">
+        </activity>
+        <activity android:name=".PasswordChangeActivity"
+            android:parentActivityName=".LockUnlockActivity">
+        </activity>
     </application>
 
 </manifest>
