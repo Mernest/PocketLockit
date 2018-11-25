@@ -21,5 +21,15 @@ public class SharedPreferenceHelper {
         return sharedPreferences.getBoolean("toggleValue", false);
     }
 
+    public void saveLockValue(boolean value) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("lockValue", value);
+        editor.apply();
+    }
+
+    public boolean getLockValue() {
+        return sharedPreferences.getBoolean("lockValue", false);
+    }
+
 
 }

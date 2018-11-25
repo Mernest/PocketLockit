@@ -11,8 +11,11 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -21,51 +24,52 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import static com.example.ernest.pocketlockit.App.CHANNEL;
 import static com.example.ernest.pocketlockit.LockUnlockActivity.SHARED_PREFS;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String SWITCH1 = "switch1";
+    private Animation shakeIt;
     // Declaring Database Instance
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
     DatabaseReference passwordRef = myRef.child("Password");
     DatabaseReference motionStatusRef = myRef.child("MotionStatus");
+    DatabaseReference ledResponse = myRef.child ("LockResponse");
 
     protected String currentDbPassword;
     protected Button verifyButton;
     protected EditText passwordEditText;
     protected boolean motionStatus;
-    //protected boolean receivedToggle;
 
     private NotificationManagerCompat notificationManager;
+    TextView redCircle, greenCircle;
 
     SharedPreferenceHelper sharedPreferenceHelper;
-    //SharedPreferences sharedPreferences;
+
+    boolean lockStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        this.setTitle("PocketLock-it");
+        shakeIt = AnimationUtils.loadAnimation(MainActivity.this,R.anim.shake);
         verifyButton = (Button) findViewById(R.id.verifyButton);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
+        redCircle = (TextView) findViewById(R.id.redcircle);
+        greenCircle = (TextView) findViewById(R.id.greencircle);
 
         sharedPreferenceHelper = new SharedPreferenceHelper(MainActivity.this);
-        String verification = String.valueOf(sharedPreferenceHelper.getToggleValue());
-        Toast toast = Toast.makeText(getApplicationContext(), verification , Toast.LENGTH_SHORT);
-        toast.show();
-        //sharedPreferences = getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
 
         notificationManager = NotificationManagerCompat.from(this);
 
-
-        //sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-
-        //receivedToggle = sharedPreferences.getBoolean("SWITCH1",false);
 
         passwordRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -77,15 +81,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-       // SharedPreferences result = getSharedPreferences("toggleValue", Context.MODE_PRIVATE);
-        //Intent data = new Intent();
-        //receivedToggle = result.getBoolean("Value", true);
-        //receivedToggle = data.getBooleanExtra("toggleValue",false);
-       // SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        //receivedToggle = sharedPreferences.getBoolean(SWITCH1, false);
-      //  receivedToggle = sharedPreferenceHelper.getToggleValue();
-
-       // if (sharedPreferenceHelper.getToggleValue()) {
             motionStatusRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -98,9 +93,14 @@ public class MainActivity extends AppCompatActivity {
                                 .setCategory(NotificationCompat.CATEGORY_STATUS)
                                 .build();
                         notificationManager.notify(1, notification);
+                        Calendar calendar = Calendar.getInstance();
+                        Date date = calendar.getTime();
+                        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+                        String formattedDate = dateFormat.format(date);
+                        String currentDate = DateFormat.getDateInstance().format(calendar.getTime()) + "\n" + formattedDate;
+                        DatabaseHelper dbhelper = new DatabaseHelper(MainActivity.this);
+                        dbhelper.insertLogItem(new LogItem(-1, currentDate, "Motion Detected"));
                     }
-                    // Toast toast = Toast.makeText(getApplicationContext(), motionStatus, Toast.LENGTH_SHORT);
-                    //toast.show();
 
                 }
 
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-        //}
+
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,12 +118,32 @@ public class MainActivity extends AppCompatActivity {
                     goToLockUnlockActivity();
                 }
                 else {
-                     //Toast toast = Toast.makeText(getApplicationContext(), currentDbPassword, Toast.LENGTH_SHORT);
+                     verifyButton.startAnimation((shakeIt));
                      Toast toast = Toast.makeText(getApplicationContext(), "Password is incorrect", Toast.LENGTH_SHORT);
                      toast.show();
                  }
             }
         });
+
+        ledResponse.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                lockStatus = dataSnapshot.getValue(boolean.class);
+                if (lockStatus){
+                    redCircle.setVisibility(View.INVISIBLE);
+                    greenCircle.setVisibility(View.VISIBLE);
+                }
+                else{
+                    redCircle.setVisibility(View.VISIBLE);
+                    greenCircle.setVisibility(View.INVISIBLE);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 
     }
@@ -131,16 +151,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        sharedPreferenceHelper = new SharedPreferenceHelper(MainActivity.this);
 
-        String verification = String.valueOf(sharedPreferenceHelper.getToggleValue());
-        Toast toast = Toast.makeText(getApplicationContext(), verification , Toast.LENGTH_SHORT);
-        toast.show();
+        if (lockStatus){
+            redCircle.setVisibility(View.INVISIBLE);
+            greenCircle.setVisibility(View.VISIBLE);
+        }
+        else{
+            redCircle.setVisibility(View.VISIBLE);
+            greenCircle.setVisibility(View.INVISIBLE);
+        }
     }
 
     void goToLockUnlockActivity(){
         Intent intent = new Intent(MainActivity.this, LockUnlockActivity.class);
         startActivity(intent);
     }
-
 }

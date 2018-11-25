@@ -33,8 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.context = context;
     }
 
-    public void onCreate(SQLiteDatabase db) { // Creates database with a Table for both all Courses
-        // And all Assignments
+    public void onCreate(SQLiteDatabase db) {
 
         // Create tables SQL execution
         String CREATE_LOG_TABLE = "CREATE TABLE " + Config.TABLE_LOG + "("
@@ -59,7 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long insertLogItem(LogItem logItem){ // Insert Course method
+    public long insertLogItem(LogItem logItem){
 
         long id = -1;
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -80,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    public List<LogItem> getAllLogItems(){ // Returns a list of all courses from database
+    public List<LogItem> getAllLogItems(){
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
@@ -119,8 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         try {
-            //for "1" delete() method returns number of deleted rows
-            //if you don't want row count just use delete(TABLE_NAME, null, null)
+
             sqLiteDatabase.delete(Config.TABLE_LOG, null, null);
 
             long count = DatabaseUtils.queryNumEntries(sqLiteDatabase, Config.TABLE_LOG);

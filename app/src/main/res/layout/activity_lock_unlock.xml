@@ -5,29 +5,54 @@
     android:id="@+id/RelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LockUnlockActivity">
+    tools:context=".LockUnlockActivity"
+    android:background="@drawable/btn_backgroupstyle">
 
-    <Button
-        android:id="@+id/unlockButton"
+
+    <TextView
+        android:id="@+id/greencircle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="142dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/lockButton"
-        android:layout_marginStart="62dp"
-        android:layout_marginLeft="62dp"
-        android:text="Unlock" />
-
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="129dp"
+        android:layout_marginLeft="129dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginBottom="313dp"
+        android:background="@drawable/circle"
+        android:gravity="center"
+        android:text="Unlocked"
+        android:textColor="#F5F5F5" />
+    <TextView
+        android:id="@+id/redcircle"
+        android:layout_width="wrap_content"
+        android:layout_height="142dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="129dp"
+        android:layout_marginLeft="129dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginBottom="313dp"
+        android:background="@drawable/red_circle"
+        android:gravity="center"
+        android:text="Locked"
+        android:textColor="#F5F5F5" />
     <Button
         android:id="@+id/lockButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight= "true"
-        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="71dp"
-        android:layout_marginRight = "70dp"
-        android:layout_marginTop="217dp"
+        android:layout_marginTop="370dp"
+        android:background="@drawable/btn_button_style"
         android:text="Lock" />
 
     <Switch

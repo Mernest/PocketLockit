@@ -42,7 +42,6 @@ public class LockUnlockActivity extends AppCompatActivity {
     final DatabaseReference ledStatus = myRef.child("LockStatus");
 
     // Needed Declarations
-    Button unlockButton;
     Button lockButton;
     Switch notificationSwitch;
 
@@ -50,15 +49,11 @@ public class LockUnlockActivity extends AppCompatActivity {
     boolean unlockPressed;
     boolean prevUnlockPressed;
     boolean switchOnOff;
-    boolean toggle;
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String SWITCH1 = "switch1";
 
-   // protected SharedPreferenceHelper sharedPreferenceHelper;
-
-    //SharedPreferences.Editor editor = sharedPreferences.edit();
-
+    TextView redCircle, greenCircle;
     SharedPreferences sharedPreferences;
     SharedPreferenceHelper sharedPreferenceHelper;
 
@@ -66,8 +61,10 @@ public class LockUnlockActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_unlock);
+        redCircle = (TextView) findViewById(R.id.redcircle);
+        greenCircle = (TextView) findViewById(R.id.greencircle);
+        this.setTitle("Door Status");
 
-        unlockButton = (Button) findViewById(R.id.unlockButton);
         lockButton = (Button) findViewById(R.id.lockButton);
         notificationSwitch = (Switch) findViewById(R.id.notificationSwitch);
 
@@ -80,35 +77,19 @@ public class LockUnlockActivity extends AppCompatActivity {
 
 
        notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            //SharedPreferences sharedPreferences = getSharedPreferences("toggleValue", Context.MODE_PRIVATE);
-            //SharedPreferences.Editor editor = sharedPreferences.edit();
+
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                if(isChecked){
-                   // toggle =true;
                    sharedPreferenceHelper.saveToggleValue(true);
-                   String verification = String.valueOf(sharedPreferenceHelper.getToggleValue());
-                   Toast toast = Toast.makeText(getApplicationContext(), verification , Toast.LENGTH_SHORT);
-                   toast.show();
 
-//                    editor.putBoolean("Value", true);
-//                    editor.apply();
-//                    Intent i = new Intent();
-//                    i.putExtra("toggleValue",true);
                 }
                 else{
-                   //toggle = false;
                    sharedPreferenceHelper.saveToggleValue(false);
-                   String verification = String.valueOf(sharedPreferenceHelper.getToggleValue());
-                   Toast toast = Toast.makeText(getApplicationContext(), verification , Toast.LENGTH_SHORT);
-                   toast.show();
+
                }
-//                toggle =false;
-//                editor.putBoolean("Value", false);
-//                editor.apply();
-//                    Intent i = new Intent();
-//                    i.putExtra("toggleValue",true);
+
                saveData();
 
             }
@@ -137,10 +118,13 @@ public class LockUnlockActivity extends AppCompatActivity {
 
 
                 if (currentStatus && unlockPressed){
-                    unlockButton.setEnabled(false);
-                    lockButton.setEnabled(true);
+                    redCircle.setVisibility(View.INVISIBLE);
+                    greenCircle.setVisibility(View.VISIBLE);
+                    sharedPreferenceHelper.saveLockValue(true);
+                    lockButton.setText("LOCK");
                     Toast toast = Toast.makeText(getApplicationContext(), "Door is Unlocked" , Toast.LENGTH_SHORT);
                     toast.show();
+
 
                     if(prevUnlockPressed) {
                         Calendar calendar = Calendar.getInstance();
@@ -153,12 +137,27 @@ public class LockUnlockActivity extends AppCompatActivity {
                         prevUnlockPressed = true;
                     }
                 }
-                else {
-                    unlockButton.setEnabled(true);
-                    lockButton.setEnabled(false);
+                else if(!currentStatus && !unlockPressed ){
+
+                    redCircle.setVisibility(View.VISIBLE);
+                    greenCircle.setVisibility(View.INVISIBLE);
+                    lockButton.setText("UNLOCK");
                     prevUnlockPressed = false;
                     Toast toast = Toast.makeText(getApplicationContext(), "Door is Locked" , Toast.LENGTH_SHORT);
                     toast.show();
+                    sharedPreferenceHelper.saveLockValue(false);
+                }
+                else if (currentStatus && !unlockPressed){
+                    redCircle.setVisibility(View.INVISIBLE);
+                    greenCircle.setVisibility(View.VISIBLE);
+                    lockButton.setText("LOCK");
+                    sharedPreferenceHelper.saveLockValue(true);
+                }
+                else {
+                    redCircle.setVisibility(View.VISIBLE);
+                    greenCircle.setVisibility(View.INVISIBLE);
+                    lockButton.setText("UNLOCK");
+                    sharedPreferenceHelper.saveLockValue(false);
                 }
             }
             @Override
@@ -167,20 +166,17 @@ public class LockUnlockActivity extends AppCompatActivity {
             }
         });
 
-        unlockButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ledStatus.setValue(true);
-                prevUnlockPressed = true;
-            }
-        });
-
         lockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ledStatus.setValue(false);
-                prevUnlockPressed = false;
+                if(lockButton.getText().equals("LOCK")){
+                    ledStatus.setValue(false);
+                    prevUnlockPressed = false;
 
+                }else{
+                    ledStatus.setValue(true);
+                    prevUnlockPressed = true;
+                }
             }
         });
     }
@@ -233,7 +229,6 @@ public class LockUnlockActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(SWITCH1,notificationSwitch.isChecked());
-       // editor.putBoolean("switchValue",switchOnOff);
         editor.apply();
     }
     public void loadData(){
