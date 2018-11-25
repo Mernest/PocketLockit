@@ -50,10 +50,17 @@ public class LockUnlockActivity extends AppCompatActivity {
     boolean unlockPressed;
     boolean prevUnlockPressed;
     boolean switchOnOff;
+    boolean toggle;
 
-    public static final String SHARED_PREFS = "sharePrefs";
-    public static final String SWITCH1 = "toggleSwitch";
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String SWITCH1 = "switch1";
 
+   // protected SharedPreferenceHelper sharedPreferenceHelper;
+
+    //SharedPreferences.Editor editor = sharedPreferences.edit();
+
+    SharedPreferences sharedPreferences;
+    SharedPreferenceHelper sharedPreferenceHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,29 +71,46 @@ public class LockUnlockActivity extends AppCompatActivity {
         lockButton = (Button) findViewById(R.id.lockButton);
         notificationSwitch = (Switch) findViewById(R.id.notificationSwitch);
 
+        sharedPreferences = this.getSharedPreferences(SHARED_PREFS,Context.MODE_PRIVATE);
+
+        sharedPreferenceHelper = new SharedPreferenceHelper(LockUnlockActivity.this);
+
         loadData();
         updateViews();
 
-        notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+       notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             //SharedPreferences sharedPreferences = getSharedPreferences("toggleValue", Context.MODE_PRIVATE);
             //SharedPreferences.Editor editor = sharedPreferences.edit();
-
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-               /* if(isChecked){
-                    //toggle =true;
+
+               if(isChecked){
+                   // toggle =true;
+                   sharedPreferenceHelper.saveToggleValue(true);
+                   String verification = String.valueOf(sharedPreferenceHelper.getToggleValue());
+                   Toast toast = Toast.makeText(getApplicationContext(), verification , Toast.LENGTH_SHORT);
+                   toast.show();
+
 //                    editor.putBoolean("Value", true);
 //                    editor.apply();
-                    Intent i = new Intent();
-                    i.putExtra("toggleValue",true);
+//                    Intent i = new Intent();
+//                    i.putExtra("toggleValue",true);
                 }
                 else{
+                   //toggle = false;
+                   sharedPreferenceHelper.saveToggleValue(false);
+                   String verification = String.valueOf(sharedPreferenceHelper.getToggleValue());
+                   Toast toast = Toast.makeText(getApplicationContext(), verification , Toast.LENGTH_SHORT);
+                   toast.show();
+               }
 //                toggle =false;
 //                editor.putBoolean("Value", false);
 //                editor.apply();
-                    Intent i = new Intent();
-                    i.putExtra("toggleValue",true);*/
+//                    Intent i = new Intent();
+//                    i.putExtra("toggleValue",true);
                saveData();
+
             }
 
         });
@@ -206,13 +230,14 @@ public class LockUnlockActivity extends AppCompatActivity {
     }
 
     public void saveData(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(SWITCH1,notificationSwitch.isChecked());
+       // editor.putBoolean("switchValue",switchOnOff);
         editor.apply();
     }
     public void loadData(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         switchOnOff = sharedPreferences.getBoolean(SWITCH1,false);
     }
     public void updateViews(){
