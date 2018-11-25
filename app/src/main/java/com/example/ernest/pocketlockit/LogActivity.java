@@ -40,6 +40,13 @@ public class LogActivity extends AppCompatActivity {
         loadListView();
     }
 
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        Intent intent = new Intent(LogActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
     protected void loadListView() {
         final DatabaseHelper dbhelper = new DatabaseHelper(this);
         logList = dbhelper.getAllLogItems();

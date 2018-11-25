@@ -191,6 +191,12 @@ public class LockUnlockActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        Intent intent = new Intent(LockUnlockActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 
 
     @Override

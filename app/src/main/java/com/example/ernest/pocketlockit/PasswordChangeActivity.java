@@ -106,6 +106,13 @@ public class PasswordChangeActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        Intent intent = new Intent(PasswordChangeActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
     void goToLockUnlockActivity(){
         Intent intent = new Intent(PasswordChangeActivity.this, LockUnlockActivity.class);
         startActivity(intent);
