@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -11,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 //    ImageView greencactus;
 
     private NotificationManagerCompat notificationManager;
+    private  Animation shakeIt;
 
 
 
@@ -57,11 +61,12 @@ public class MainActivity extends AppCompatActivity {
 //        redcactus.setVisibility(View.INVISIBLE);
 //        greencactus = (ImageView)findViewById(R.id.greencactus);
 //        greencactus.setVisibility(View.INVISIBLE);
+
+        shakeIt = AnimationUtils.loadAnimation(MainActivity.this,R.anim.shake);
         verifyButton = (Button) findViewById(R.id.verifyButton);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
 
         notificationManager = NotificationManagerCompat.from(this);
-
 
         passwordRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -84,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL).setSmallIcon(R.drawable.ic_stat_name)
                         .setContentTitle("Motion")
                         .setContentText("Someone is close to your door")
+                        .setSmallIcon(R.drawable.baseline_phonelink_lock_black_18dp)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setCategory(NotificationCompat.CATEGORY_STATUS)
                         .build();
@@ -128,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                        //      redcactus.setVisibility(View.INVISIBLE);
                        //  }}, 2000);
                      //Toast toast = Toast.makeText(getApplicationContext(), currentDbPassword, Toast.LENGTH_SHORT);
+                     verifyButton.startAnimation(shakeIt);
                      Toast toast = Toast.makeText(getApplicationContext(), "Password is incorrect", Toast.LENGTH_SHORT);
                      toast.show();
                  }

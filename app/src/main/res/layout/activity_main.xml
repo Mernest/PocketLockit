@@ -8,30 +8,68 @@
     android:background="@drawable/btn_backgroupstyle">
 
     <EditText
-        android:textCursorDrawable="@color/title_color"
-        android:textColor="@color/title_color"
+        android:ellipsize="start"
         android:id="@+id/passwordEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="192dp"
-        android:ems="10"
+        android:layout_marginTop="294dp"
         android:backgroundTint="@color/title_color"
+        android:ems="10"
         android:hint="Enter your password"
         android:inputType="textPassword"
         android:maxLength="10"
+        android:textColor="@color/title_color"
         android:textColorHint="#F5F5F5" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="118dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginBottom="235dp"
+        android:id="@+id/greencircle"
+        android:background="@drawable/circle"
+        android:gravity="center"
+        android:text="Unlocked"
+        android:textColor="#F5F5F5" />
+    <TextView
+        android:id="@+id/redcircle"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="118dp"
+        android:layout_marginEnd="130dp"
+        android:layout_marginRight="130dp"
+        android:layout_marginBottom="235dp"
+        android:background="@drawable/red_circle"
+        android:gravity="center"
+        android:text="Locked"
+        android:textColor="#F5F5F5" />
 
     <Button
-        android:background="@drawable/btn_button_style"
         android:id="@+id/verifyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="149dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/btn_button_style"
         android:text="Verify" />
 
 

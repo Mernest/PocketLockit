@@ -32,8 +32,9 @@ public class LockUnlockActivity extends AppCompatActivity {
     final DatabaseReference ledStatus = myRef.child("LockStatus");
 
     // Needed Declarations
-    Button unlockButton;
+    //Button unlockButton;
     Button lockButton;
+
 //    ImageView greenUnlock;
 //    ImageView redLock;
     boolean currentStatus;
@@ -50,7 +51,7 @@ public class LockUnlockActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_unlock);
 
-        unlockButton = (Button) findViewById(R.id.unlockButton);
+        //unlockButton = (Button) findViewById(R.id.unlockButton);
         lockButton = (Button) findViewById(R.id.lockButton);
         greencircle = (TextView) findViewById(R.id.greencircle);
         redcircle = (TextView) findViewById(R.id.redcircle);
@@ -71,8 +72,9 @@ public class LockUnlockActivity extends AppCompatActivity {
                 currentStatus = dataSnapshot.getValue(boolean.class);
 
                 if (currentStatus){
-                    unlockButton.setEnabled(false);
-                    lockButton.setEnabled(true);
+                    //unlockButton.setEnabled(false);
+                    //lockButton.setEnabled(true);
+                    lockButton.setText("LOCK");
                     redcircle.setVisibility(View.INVISIBLE);
                     greencircle.setVisibility(View.VISIBLE);
 
@@ -92,8 +94,9 @@ public class LockUnlockActivity extends AppCompatActivity {
                     toast.show();
                 }
                 else {
-                    unlockButton.setEnabled(true);
-                    lockButton.setEnabled(false);
+//                    unlockButton.setEnabled(true);
+//                    lockButton.setEnabled(false);
+                    lockButton.setText("UNLOCK");
                     redcircle.setVisibility(View.VISIBLE);
                     greencircle.setVisibility(View.INVISIBLE);
 //                    redLock.setVisibility(View.VISIBLE);
@@ -119,18 +122,25 @@ public class LockUnlockActivity extends AppCompatActivity {
             }
         });
 
-        unlockButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ledStatus.setValue(true);
-
-            }
-        });
+//        unlockButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ledStatus.setValue(true);
+//
+//            }
+//        });
 
         lockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ledStatus.setValue(false);
+                if(lockButton.getText().equals("LOCK")){
+
+                    ledStatus.setValue(false);
+                }else{
+
+                    ledStatus.setValue(true);
+                }
+               // ledStatus.setValue(false);
 
             }
         });

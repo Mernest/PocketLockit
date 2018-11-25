@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/passwordChangeMenu"
-        android:icon="@drawable/baseline_phonelink_lock_black_18dp"
-        android:title="Change Password"
-        app:showAsAction="always">
-
-    </item>
+    <item android:id="@+id/passwordChangeMenu"
+        android:title="Change Password"></item>
 </menu>
