@@ -1,9 +1,12 @@
 package com.example.ernest.pocketlockit;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
@@ -70,6 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
         notificationManager = NotificationManagerCompat.from(this);
 
+       // Intent activityIntent = new Intent(this, MainActivity.class);
+        Intent activityIntent = new Intent(Intent.ACTION_DIAL);
+        activityIntent.setData(Uri.parse("tel:"));
+        final PendingIntent contentIntent = PendingIntent.getActivity(this,0,activityIntent,0);
 
         passwordRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -86,11 +93,15 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     motionStatus = dataSnapshot.getValue(boolean.class);
                     if (motionStatus && sharedPreferenceHelper.getToggleValue()) {
+
                         Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL).setSmallIcon(R.drawable.ic_stat_name)
                                 .setContentTitle("Motion")
                                 .setContentText("Someone is close to your door")
                                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                                 .setCategory(NotificationCompat.CATEGORY_STATUS)
+                                .setColor(Color.BLUE)
+                                .setContentIntent(contentIntent)
+                                .setAutoCancel(true)
                                 .build();
                         notificationManager.notify(1, notification);
                         Calendar calendar = Calendar.getInstance();
@@ -164,4 +175,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, LockUnlockActivity.class);
         startActivity(intent);
     }
+
+//    void notificationIntent(){
+//        Intent activityIntent = new Intent(this, MainActivity.class);
+//        PendingIntent contentIntent = PendingIntent.getActivity(this,0,activityIntent,0);
+//    }
 }

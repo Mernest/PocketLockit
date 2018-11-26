@@ -14,7 +14,6 @@ public class App extends Application {
         super.onCreate();
 
         createNotificationChannel();
-
     }
 
     private void createNotificationChannel(){
