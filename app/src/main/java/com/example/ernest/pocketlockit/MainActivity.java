@@ -105,19 +105,17 @@ public class MainActivity extends AppCompatActivity {
                                 .setColor(Color.BLUE)
                                 .setContentIntent(contentIntent)
                                 .setAutoCancel(true)
-                                .setOnlyAlertOnce(true)
                                 .setSmallIcon(R.drawable.image)
                                 .build();
                         notificationManager.notify(1, notification);
-                        Calendar calendar = Calendar.getInstance();
-                        Date date = calendar.getTime();
-                        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-                        String formattedDate = dateFormat.format(date);
-                        String currentDate = DateFormat.getDateInstance().format(calendar.getTime()) + "\n" + formattedDate;
-                        DatabaseHelper dbhelper = new DatabaseHelper(MainActivity.this);
-                        dbhelper.insertLogItem(new LogItem(-1, currentDate, "Motion Detected"));
                     }
-
+                    Calendar calendar = Calendar.getInstance();
+                    Date date = calendar.getTime();
+                    DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+                    String formattedDate = dateFormat.format(date);
+                    String currentDate = DateFormat.getDateInstance().format(calendar.getTime()) + "\n" + formattedDate;
+                    DatabaseHelper dbhelper = new DatabaseHelper(MainActivity.this);
+                    dbhelper.insertLogItem(new LogItem(-1, currentDate, "Motion Detected"));
                 }
 
                 @Override
