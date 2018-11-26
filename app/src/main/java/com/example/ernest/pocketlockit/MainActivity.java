@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
@@ -37,6 +38,7 @@ import static com.example.ernest.pocketlockit.LockUnlockActivity.SHARED_PREFS;
 
 public class MainActivity extends AppCompatActivity {
 
+    Vibrator vibrator;
     private Animation shakeIt;
     // Declaring Database Instance
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -63,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.setTitle("PocketLock-it");
+
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
         shakeIt = AnimationUtils.loadAnimation(MainActivity.this,R.anim.shake);
         verifyButton = (Button) findViewById(R.id.verifyButton);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
@@ -130,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                      verifyButton.startAnimation((shakeIt));
+                     vibrator.vibrate(50);
                      Toast toast = Toast.makeText(getApplicationContext(), "Password is incorrect", Toast.LENGTH_SHORT);
                      toast.show();
                  }
