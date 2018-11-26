@@ -1,14 +1,18 @@
 package com.example.ernest.pocketlockit;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,13 +56,26 @@ public class LogActivity extends AppCompatActivity {
         logList = dbhelper.getAllLogItems();
         final ArrayList<String> listLogItems = new ArrayList<>();
 
-        for(int i=0; i< logList.size(); i++){ // Adds course to listView along with their average
-            listLogItems.add(logList.get(i).getTime() + "\n"+ logList.get(i).getTag());
+        for (int i = 0; i < logList.size(); i++) { // Adds course to listView along with their average
+            listLogItems.add(logList.get(i).getTime() + "\n" + logList.get(i).getTag());
         }
 
-        final ArrayAdapter adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listLogItems);
+        final ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listLogItems) {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+
+                TextView textView = (TextView) view.findViewById(android.R.id.text1);
+
+                textView.setTextColor(Color.WHITE);
+
+                return view;
+            }
+        };
         logListView.setAdapter(adapter);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,6 +105,7 @@ public class LogActivity extends AppCompatActivity {
         Intent intent = new Intent(LogActivity.this, LockUnlockActivity.class);
         startActivity(intent);
     }
+
 
 }
 
