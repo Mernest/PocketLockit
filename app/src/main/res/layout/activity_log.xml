@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LogActivity">
+    tools:context=".LogActivity"
+    android:background="@drawable/btn_backgroupstyle">
 
     <ListView
         android:id="@+id/logListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="#FFFFFF"
+        android:dividerHeight="4px"/>
 </RelativeLayout>

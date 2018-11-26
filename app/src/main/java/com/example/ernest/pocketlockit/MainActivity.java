@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     TextView redCircle, greenCircle;
 
     SharedPreferenceHelper sharedPreferenceHelper;
+    Vibrator vibrator;
 
     boolean lockStatus;
 
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         redCircle = (TextView) findViewById(R.id.redcircle);
         greenCircle = (TextView) findViewById(R.id.greencircle);
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         sharedPreferenceHelper = new SharedPreferenceHelper(MainActivity.this);
 
@@ -102,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
                                 .setColor(Color.BLUE)
                                 .setContentIntent(contentIntent)
                                 .setAutoCancel(true)
+                                .setOnlyAlertOnce(true)
+                                .setSmallIcon(R.drawable.image)
                                 .build();
                         notificationManager.notify(1, notification);
                         Calendar calendar = Calendar.getInstance();
@@ -130,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                      verifyButton.startAnimation((shakeIt));
+                     vibrator.vibrate(100);
                      Toast toast = Toast.makeText(getApplicationContext(), "Password is incorrect", Toast.LENGTH_SHORT);
                      toast.show();
                  }
@@ -176,8 +182,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    void notificationIntent(){
-//        Intent activityIntent = new Intent(this, MainActivity.class);
-//        PendingIntent contentIntent = PendingIntent.getActivity(this,0,activityIntent,0);
-//    }
+
 }

@@ -82,11 +82,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<LogItem> getAllLogItems(){
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-
+        String sortOrder= Config.COLUMN_LOG_TIME + " DESC ";
         Cursor cursor = null;
         try {
 
-            cursor = sqLiteDatabase.query(Config.TABLE_LOG, null, null, null, null, null, null, null);
+            cursor = sqLiteDatabase.query(Config.TABLE_LOG, null, null, null, null, null, sortOrder, null);
 
             if(cursor!=null)
                 if(cursor.moveToFirst()){
@@ -132,7 +132,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } finally {
             sqLiteDatabase.close();
         }
-
         return deleteStatus;
     }
 
